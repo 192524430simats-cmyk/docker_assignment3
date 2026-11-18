@@ -1,0 +1,21 @@
+Disclosure: Local history prepared to demonstrate the requested individual-assignment workflow. Feature branches represent simulated work; commit authors are preparation labels, not separate students. No remote, GitHub pull request, or external reviewer is represented.
+Commit graph:
+* 4e16cc9 (HEAD -> main, tag: v1.0.0) Refresh final assignment report
+*   7b0badf Resolve documentation conflict and finalize release
+|\  
+| * 50ca11d (feature/maintenance-triage) Document sensor triage demonstration
+* |   5781805 Merge booking controls
+|\ \  
+| |/  
+|/|   
+| * a431a5d (feature/booking-controls) Document booking setup and retry controls
+|/  
+* 4e85b43 Build integrated campus operations release
+
+Branches:
+  feature/booking-controls
+  feature/maintenance-triage
+* main
+
+Tags:
+v1.0.0          Stable assignment release
