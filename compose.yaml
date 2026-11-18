@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: campus
+      POSTGRES_USER: campus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-localdemo_only}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./app/schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U campus -d campus"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  api:
+    build: ./app
+    environment:
+      DATABASE_URL: postgresql://campus:${POSTGRES_PASSWORD:-localdemo_only}@db:5432/campus
+    depends_on:
+      db: { condition: service_healthy }
+    expose: ["5000"]
+    restart: unless-stopped
+  proxy:
+    image: nginx:1.27-alpine
+    ports: ["8080:80"]
+    volumes: ["./nginx.conf:/etc/nginx/nginx.conf:ro"]
+    depends_on: [api]
+    restart: unless-stopped
+volumes:
+  pgdata:
